@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/faiz-portfolio/static/css/main.9ac2fc52.css",
-    "main.js": "/faiz-portfolio/static/js/main.dd7313a9.js",
+    "main.js": "/faiz-portfolio/static/js/main.2314c4c4.js",
     "static/media/Avatar.png": "/faiz-portfolio/static/media/Avatar.fa312ccf8f85946c64d0.png",
-    "static/media/Faiz's Resume.pdf": "/faiz-portfolio/static/media/Faiz's Resume.3773cb78e849eb834e9f.pdf",
+    "static/media/Faiz's Resume.pdf": "/faiz-portfolio/static/media/Faiz's Resume.12981365e16ffbb92f0f.pdf",
     "index.html": "/faiz-portfolio/index.html",
     "main.9ac2fc52.css.map": "/faiz-portfolio/static/css/main.9ac2fc52.css.map",
-    "main.dd7313a9.js.map": "/faiz-portfolio/static/js/main.dd7313a9.js.map"
+    "main.2314c4c4.js.map": "/faiz-portfolio/static/js/main.2314c4c4.js.map"
   },
   "entrypoints": [
     "static/css/main.9ac2fc52.css",
-    "static/js/main.dd7313a9.js"
+    "static/js/main.2314c4c4.js"
   ]
 }
