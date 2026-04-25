@@ -4,8 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faiz Mohammad — Web Developer & Automation Specialist</title>
+    <meta name="theme-color" content="#050510">
+    <meta name="description"
+        content="Faiz Mohammad — Google Apps Script Engineer & Full-Stack Developer. Portfolio of web apps, automation tools, and Google Workspace Marketplace add-ons.">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Faiz.dev">
+    <title>Faiz Mohammad — Google Apps Script Engineer &amp; Full-Stack Developer</title>
     <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="apple-touch-icon" href="./favicon.png">
+    <link rel="manifest" href="./site.webmanifest">
     <link
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
         rel="stylesheet">
@@ -73,6 +82,8 @@
 
         html {
             scroll-behavior: smooth;
+            /* Fix 6: strictly prevent horizontal overflow on all devices */
+            overflow-x: hidden;
         }
 
         body {
@@ -81,6 +92,7 @@
             font-family: 'DM Sans', sans-serif;
             font-size: 16px;
             line-height: 1.7;
+            /* Fix 6: enforce no horizontal scroll on body too */
             overflow-x: hidden;
             cursor: none;
         }
@@ -248,6 +260,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            /* Minimum 48×48 touch target */
+            min-width: 48px;
+            min-height: 48px;
             padding: 0.5rem;
             transition: color 0.3s;
         }
@@ -279,7 +294,12 @@
             cursor: none;
             background: none;
             border: none;
-            padding: 4px;
+            /* Minimum 48×48 touch target */
+            min-width: 48px;
+            min-height: 48px;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
         }
 
         .hamburger span {
@@ -334,6 +354,8 @@
             padding: 6rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
+            /* Fix: prevent sticky nav overlapping section headings */
+            scroll-margin-top: 70px;
         }
 
         /* ── HERO ── */
@@ -353,7 +375,17 @@
             grid-template-columns: 1fr auto;
             gap: 4rem;
             align-items: center;
+            /* Fix 5: cap width so it never bleeds past viewport */
             width: 100%;
+            max-width: 100%;
+        }
+
+        /* Desktop default for the avatar+card column */
+        .hero-col-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
         }
 
         .hero-badge {
@@ -717,8 +749,15 @@
 
         .marquee-track {
             display: flex;
-            animation: marqueeMove 20s linear infinite;
+            /* Fix 1 & 5: animation must be applied, GPU-accelerated */
+            animation: marqueeMove 25s linear infinite;
             width: max-content;
+            will-change: transform;
+        }
+
+        /* Pause on hover for better UX */
+        .marquee-section:hover .marquee-track {
+            animation-play-state: paused;
         }
 
         .marquee-item {
@@ -749,11 +788,11 @@
 
         @keyframes marqueeMove {
             0% {
-                transform: translateX(0)
+                transform: translateX(0);
             }
 
             100% {
-                transform: translateX(-50%)
+                transform: translateX(-50%);
             }
         }
 
@@ -763,12 +802,20 @@
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: start;
+            width: 100%;
+            box-sizing: border-box;
+            /* NOTE: do NOT use overflow:hidden here — it clips
+               slide-left animated children by 10px on mobile */
         }
 
+        /* Fix 4: prevent long words breaking layout on narrow screens */
         .about-text p {
             color: var(--text2);
             margin-bottom: 1rem;
             line-height: 1.85;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
         }
 
         .about-stats {
@@ -1396,13 +1443,80 @@
             transition-delay: 0.4s;
         }
 
-        /* ── RESPONSIVE ── */
+        /* ── REDUCED MOTION: disable heavy animations on low-power devices ── */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .loader-bar {
+                animation: none;
+                width: 100%;
+            }
+
+            .badge-dot {
+                animation: none;
+            }
+
+            .hero-name {
+                animation: none;
+                background-position: 0% 50%;
+            }
+
+            .card-3d {
+                animation: none;
+            }
+
+            .ripple-ring {
+                animation: none;
+            }
+
+            /* Fix 4: don't kill marquee content — pause it instead */
+            .marquee-track {
+                animation-play-state: paused;
+            }
+
+            .contact-ripple {
+                animation: none;
+            }
+        }
+
+        /* ── HIDE custom cursor on touch devices ── */
+        @media (hover: none) and (pointer: coarse) {
+            body {
+                cursor: auto;
+            }
+
+            #cursor-dot,
+            #cursor-ring {
+                display: none;
+            }
+
+            .nav-links a,
+            .hamburger,
+            .theme-toggle,
+            .btn-primary,
+            .btn-secondary,
+            .contact-link,
+            .mobile-menu a {
+                cursor: auto;
+            }
+        }
+
+        /* ══════════════════════════════════════════
+           RESPONSIVE — Mobile-First Breakpoints
+        ══════════════════════════════════════════ */
+
+        /* Large Tablets / Small Laptops */
         @media (max-width: 1024px) {
             .hero-inner {
                 gap: 2rem;
             }
         }
 
+        /* Tablets ≤ 900px */
         @media (max-width: 900px) {
             .hero-inner {
                 grid-template-columns: 1fr;
@@ -1445,21 +1559,126 @@
             }
         }
 
-        @media (max-width: 600px) {
-            .nav-links {
-                display: none;
+        /* Mobile — hamburger kicks in at 768px */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            nav { padding: 0.75rem 1.25rem; }
+
+            /* Task 6: standardize section padding */
+            section { padding: 3rem 1.25rem; box-sizing: border-box; }
+
+            /* ── Task 1: Hero Overlap Fix ──
+               Convert grid to flex column so avatar stacks BELOW the text
+               and can never overlap on any screen width. */
+            #hero {
+                min-height: auto;
+                padding-top: 5rem;
+                padding-bottom: 3rem;
+                align-items: flex-start;
             }
 
-            .hamburger {
+            .hero-inner {
                 display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 2.5rem;
+                width: 100%;
+                max-width: 100%;
+                margin: 0 auto;
+                padding: 0 1.25rem;
+                box-sizing: border-box;
             }
 
+            .hero-content {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* Task 4: avatar+card column centered, full-width */
+            .hero-col-right {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                gap: 1.5rem;
+            }
+
+            /* Task 2: hero-name clamp minimum 1.8rem */
+            .hero-name { font-size: clamp(1.8rem, 9vw, 3.5rem); }
+
+            /* Task 3: slide animations reduced to 10px */
+            .reveal.slide-right { transform: translateX(10px); }
+            .reveal.slide-left  { transform: translateX(-10px); }
+
+            /* Task 2: scale section-title */
+            .section-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+            .contact-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+
+            /* Task 4: marquee stays active (will-change already on track) */
+            .marquee-track { animation-play-state: running; }
+
+            .projects-grid { grid-template-columns: 1fr; }
+            .about-stats   { grid-template-columns: 1fr 1fr; }
+            .skills-grid   { grid-template-columns: 1fr; }
+            .addons-grid   { grid-template-columns: 1fr; }
+
+            .card-3d-wrap { transform: scale(0.9); margin-top: 0; }
+
+            /* card-3d must not exceed viewport */
+            .card-3d { width: 280px; max-width: 90vw; box-sizing: border-box; }
+
+            .contact-inner { padding: 2.5rem 1.25rem; }
+
+            .edu-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+            .timeline-item { padding-left: 3rem; }
+
+            .info-list li { flex-direction: column; gap: 0.25rem; }
+            .info-list li strong { min-width: auto; }
+
+            /* Task 7: touch targets 48px min */
+            .contact-link {
+                min-height: 48px;
+                padding: 0.85rem 1.25rem;
+                justify-content: center;
+            }
+
+            /* Task 7: buttons 48px min, centered */
+            .btn-primary,
+            .btn-secondary {
+                min-height: 48px;
+                width: 100%;
+                max-width: 320px;
+                justify-content: center;
+                padding: 0.85rem 1.5rem;
+            }
+
+            /* Task 7: hero CTA stacked */
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.75rem;
+                width: 100%;
+            }
+
+            /* about-grid single column — no overflow:hidden (would clip slide-left children) */
+            .about-grid {
+                width: 100%; max-width: 100%;
+                box-sizing: border-box;
+                grid-template-columns: 1fr; gap: 2rem;
+            }
+        }
+
+        /* Small Mobile ≤ 480px */
+        @media (max-width: 480px) {
+
+            /* Fix 4: reduce section padding to reclaim real estate */
             section {
-                padding: 4rem 1.5rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
+                padding: 2.5rem 1rem;
             }
 
             .about-stats {
@@ -1467,51 +1686,39 @@
             }
 
             .card-3d-wrap {
-                transform: scale(0.9);
-                margin-top: 1.5rem;
-            }
-
-            .contact-inner {
-                padding: 2.5rem 1.25rem;
-            }
-
-            .edu-inner {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-
-            .timeline-item {
-                padding-left: 3rem;
-            }
-
-            .info-list li {
-                flex-direction: column;
-                gap: 0.25rem;
-            }
-
-            .info-list li strong {
-                min-width: auto;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .about-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .card-3d-wrap {
-                transform: scale(0.8);
+                transform: scale(0.88);
             }
 
             .card-3d {
                 width: 100%;
-                max-width: 280px;
+                max-width: 300px;
                 padding: 1.25rem 1.5rem;
             }
 
+            /* Fix 3: hero avatar breathing room */
+            .hero-inner {
+                gap: 3rem;
+            }
+
+            /* Fix 1: scale down hero-name for mobile */
+            .hero-name {
+                font-size: clamp(1.8rem, 9vw, 2.8rem);
+            }
+
+            /* Fix 1: scale section-title down */
+            .section-title {
+                font-size: clamp(1.4rem, 6.5vw, 2rem);
+            }
+
+            /* Fix 1: scale contact-title down */
+            .contact-title {
+                font-size: clamp(1.4rem, 6.5vw, 2rem);
+            }
+
+            /* Fix 5: hero CTA full-width centered buttons */
             .hero-cta {
                 flex-direction: column;
+                align-items: center;
                 width: 100%;
                 gap: 0.75rem;
             }
@@ -1520,8 +1727,10 @@
             .btn-secondary {
                 width: 100%;
                 justify-content: center;
+                max-width: 100%;
             }
 
+            /* Fix 3: contact links full-width, 52px touch targets */
             .contact-links {
                 flex-direction: column;
                 gap: 0.75rem;
@@ -1530,7 +1739,66 @@
             .contact-link {
                 width: 100%;
                 justify-content: center;
+                min-height: 52px;
+                padding: 0.9rem 1.25rem;
             }
+
+            /* ── AUDIT FIX: stat cards collapse at 430px —
+               iPhones (375–430px) were showing 1fr 1fr causing overflow.
+               This moves the collapse up to cover all common phone widths. */
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            /* tag-list: wrap tags so they never overflow */
+            .tag-list {
+                flex-wrap: wrap;
+            }
+
+            /* edu-band: let text wrap on small screens */
+            .edu-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+            .edu-degree, .edu-inst, .edu-period {
+                word-break: break-word;
+                overflow-wrap: break-word;
+            }
+
+            /* timeline dot size on very narrow screens */
+            .timeline-dot {
+                width: 2rem;
+                height: 2rem;
+                font-size: 0.7rem;
+                left: 0;
+            }
+
+            /* info-list: prevent email/stack text overflow */
+            .info-list li span {
+                word-break: break-all;
+                overflow-wrap: break-word;
+            }
+
+            /* footer centered */
+            footer {
+                text-align: center;
+                padding: 1.5rem 1.25rem;
+            }
+        }
+
+        /* Very Small ≤ 380px */
+        @media (max-width: 380px) {
+            .hero-name { font-size: clamp(1.6rem, 8.5vw, 2.2rem); }
+            .section-title { font-size: clamp(1.3rem, 6vw, 1.8rem); }
+            .contact-title { font-size: clamp(1.3rem, 6vw, 1.8rem); }
+
+            .card-3d-wrap { transform: scale(0.8); }
+            .card-3d { max-width: 85vw; }
+            nav { padding: 0.65rem 1rem; }
+            .hero-cta { gap: 0.6rem; }
+
+            section { padding: 2rem 1rem; box-sizing: border-box; }
         }
     </style>
 </head>
@@ -1562,7 +1830,8 @@
             <li><a href="#projects">Projects</a></li>
             <li><a href="#addons">Add-ons</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="./Faiz_Resume.pdf" target="_blank" style="color: var(--cyan); font-weight: 600;">Resume</a></li>
+            <li><a href="./Faiz_Resume.pdf" target="_blank" style="color: var(--cyan); font-weight: 600;">Resume</a>
+            </li>
         </ul>
         <div class="nav-actions">
             <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
@@ -1623,7 +1892,8 @@
                     </div>
                 </div>
 
-                <div style="display:flex;flex-direction:column;align-items:center;gap:2rem;">
+                <!-- Fix 4: named class for flex-centering via CSS -->
+                <div class="hero-col-right">
                     <div class="avatar-wrap reveal slide-right">
                         <div class="ripple-ring"></div>
                         <div class="ripple-ring"></div>
@@ -2004,7 +2274,8 @@
                     </a>
                 </div>
                 <a href="mailto:faiz.mohammad.dev@gmail.com" class="btn-primary"
-                    style="display:inline-flex;margin:0 auto">Hire Me →</a>
+                    style="display:flex;align-items:center;justify-content:center;margin:0 auto;width:100%;max-width:280px;">Hire
+                    Me →</a>
             </div>
         </section>
     </main>
