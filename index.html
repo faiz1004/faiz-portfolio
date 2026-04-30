@@ -878,7 +878,7 @@
         /* ── SKILLS ── */
         .skills-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 1.5rem;
         }
 
@@ -1561,12 +1561,23 @@
 
         /* Mobile — hamburger kicks in at 768px */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-            nav { padding: 0.75rem 1.25rem; }
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                padding: 0.75rem 1.25rem;
+            }
 
             /* Task 6: standardize section padding */
-            section { padding: 3rem 1.25rem; box-sizing: border-box; }
+            section {
+                padding: 3rem 1.25rem;
+                box-sizing: border-box;
+            }
 
             /* ── Task 1: Hero Overlap Fix ──
                Convert grid to flex column so avatar stacks BELOW the text
@@ -1608,37 +1619,78 @@
             }
 
             /* Task 2: hero-name clamp minimum 1.8rem */
-            .hero-name { font-size: clamp(1.8rem, 9vw, 3.5rem); }
+            .hero-name {
+                font-size: clamp(1.8rem, 9vw, 3.5rem);
+            }
 
             /* Task 3: slide animations reduced to 10px */
-            .reveal.slide-right { transform: translateX(10px); }
-            .reveal.slide-left  { transform: translateX(-10px); }
+
+
 
             /* Task 2: scale section-title */
-            .section-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
-            .contact-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+            .section-title {
+                font-size: clamp(1.8rem, 6vw, 2.4rem);
+            }
+
+            .contact-title {
+                font-size: clamp(1.8rem, 6vw, 2.4rem);
+            }
 
             /* Task 4: marquee stays active (will-change already on track) */
-            .marquee-track { animation-play-state: running; }
+            .marquee-track {
+                animation-play-state: running;
+            }
 
-            .projects-grid { grid-template-columns: 1fr; }
-            .about-stats   { grid-template-columns: 1fr 1fr; }
-            .skills-grid   { grid-template-columns: 1fr; }
-            .addons-grid   { grid-template-columns: 1fr; }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
 
-            .card-3d-wrap { transform: scale(0.9); margin-top: 0; }
+            .about-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .addons-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-3d-wrap {
+                transform: scale(0.9);
+                margin-top: 0;
+            }
 
             /* card-3d must not exceed viewport */
-            .card-3d { width: 280px; max-width: 90vw; box-sizing: border-box; }
+            .card-3d {
+                width: 280px;
+                max-width: 90vw;
+                box-sizing: border-box;
+            }
 
-            .contact-inner { padding: 2.5rem 1.25rem; }
+            .contact-inner {
+                padding: 2.5rem 1.25rem;
+            }
 
-            .edu-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .edu-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
 
-            .timeline-item { padding-left: 3rem; }
+            .timeline-item {
+                padding-left: 3rem;
+            }
 
-            .info-list li { flex-direction: column; gap: 0.25rem; }
-            .info-list li strong { min-width: auto; }
+            .info-list li {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .info-list li strong {
+                min-width: auto;
+            }
 
             /* Task 7: touch targets 48px min */
             .contact-link {
@@ -1667,9 +1719,11 @@
 
             /* about-grid single column — no overflow:hidden (would clip slide-left children) */
             .about-grid {
-                width: 100%; max-width: 100%;
+                width: 100%;
+                max-width: 100%;
                 box-sizing: border-box;
-                grid-template-columns: 1fr; gap: 2rem;
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
         }
 
@@ -1761,7 +1815,10 @@
                 align-items: flex-start;
                 gap: 0.75rem;
             }
-            .edu-degree, .edu-inst, .edu-period {
+
+            .edu-degree,
+            .edu-inst,
+            .edu-period {
                 word-break: break-word;
                 overflow-wrap: break-word;
             }
@@ -1789,16 +1846,38 @@
 
         /* Very Small ≤ 380px */
         @media (max-width: 380px) {
-            .hero-name { font-size: clamp(1.6rem, 8.5vw, 2.2rem); }
-            .section-title { font-size: clamp(1.3rem, 6vw, 1.8rem); }
-            .contact-title { font-size: clamp(1.3rem, 6vw, 1.8rem); }
+            .hero-name {
+                font-size: clamp(1.6rem, 8.5vw, 2.2rem);
+            }
 
-            .card-3d-wrap { transform: scale(0.8); }
-            .card-3d { max-width: 85vw; }
-            nav { padding: 0.65rem 1rem; }
-            .hero-cta { gap: 0.6rem; }
+            .section-title {
+                font-size: clamp(1.3rem, 6vw, 1.8rem);
+            }
 
-            section { padding: 2rem 1rem; box-sizing: border-box; }
+            .contact-title {
+                font-size: clamp(1.3rem, 6vw, 1.8rem);
+            }
+
+            .card-3d-wrap {
+                transform: scale(0.8);
+            }
+
+            .card-3d {
+                max-width: 85vw;
+            }
+
+            nav {
+                padding: 0.65rem 1rem;
+            }
+
+            .hero-cta {
+                gap: 0.6rem;
+            }
+
+            section {
+                padding: 2rem 1rem;
+                box-sizing: border-box;
+            }
         }
     </style>
 </head>
