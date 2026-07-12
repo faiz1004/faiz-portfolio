@@ -386,6 +386,7 @@
             flex-direction: column;
             align-items: center;
             gap: 2rem;
+            padding-right: 0.5rem;
         }
 
         .hero-badge {
@@ -606,6 +607,8 @@
             border-radius: 20px;
             padding: 1.5rem 2rem;
             width: 300px;
+            max-width: 100%;
+            box-sizing: border-box;
             animation: float3d 6s ease-in-out infinite;
             transform-style: preserve-3d;
             position: relative;
@@ -625,19 +628,19 @@
 
             0%,
             100% {
-                transform: rotateX(5deg) rotateY(-5deg) translateY(0px);
+                transform: rotateX(4deg) rotateY(-2deg) translateY(0px);
             }
 
             25% {
-                transform: rotateX(-5deg) rotateY(5deg) translateY(-8px);
+                transform: rotateX(-3deg) rotateY(2deg) translateY(-8px);
             }
 
             50% {
-                transform: rotateX(8deg) rotateY(8deg) translateY(-4px);
+                transform: rotateX(5deg) rotateY(3deg) translateY(-4px);
             }
 
             75% {
-                transform: rotateX(-3deg) rotateY(-8deg) translateY(-12px);
+                transform: rotateX(-2deg) rotateY(-3deg) translateY(-12px);
             }
         }
 
@@ -653,11 +656,14 @@
 
         .card-3d-stat {
             font-family: 'Syne', sans-serif;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: var(--text);
             position: relative;
             z-index: 1;
+            line-height: 1.1;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         .card-3d-desc {
@@ -739,6 +745,7 @@
         /* ── MARQUEE ── */
         .marquee-section {
             padding: 2rem 0;
+            margin-top: 4rem;
             overflow: hidden;
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
@@ -878,15 +885,19 @@
         /* ── SKILLS ── */
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+        }
+
+        .skill-group {
+            min-width: 0;
         }
 
         .skill-group {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 2rem;
+            padding: 1.5rem 1.25rem;
         }
 
         .skill-group-title {
@@ -1473,9 +1484,9 @@
                 animation: none;
             }
 
-            /* Fix 4: don't kill marquee content — pause it instead */
+            /* Keep marquee scrolling even with reduced motion */
             .marquee-track {
-                animation-play-state: paused;
+                animation-play-state: running !important;
             }
 
             .contact-ripple {
@@ -1547,7 +1558,7 @@
             }
 
             .skills-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr;
             }
 
             .addons-grid {
@@ -1639,6 +1650,10 @@
             /* Task 4: marquee stays active (will-change already on track) */
             .marquee-track {
                 animation-play-state: running;
+            }
+
+            .marquee-section {
+                margin-top: 2rem;
             }
 
             .projects-grid {
@@ -1879,6 +1894,100 @@
                 box-sizing: border-box;
             }
         }
+
+        /* ══════════════════════════════════════════
+           Foldables / very narrow ≤ 320px
+        ══════════════════════════════════════════ */
+        @media (max-width: 320px) {
+            .hero-name {
+                font-size: clamp(1.4rem, 8vw, 1.9rem);
+            }
+
+            .section-title,
+            .contact-title {
+                font-size: clamp(1.2rem, 5.5vw, 1.6rem);
+            }
+
+            /* stop 340px min-width grids from squeezing */
+            .skills-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skill-group,
+            .project-card,
+            .addon-card {
+                padding: 1.5rem 1.25rem;
+            }
+
+            .card-3d-wrap {
+                transform: scale(0.72);
+            }
+
+            section {
+                padding: 1.75rem 0.85rem;
+            }
+
+            nav {
+                padding: 0.6rem 0.85rem;
+            }
+        }
+
+        /* ══════════════════════════════════════════
+           Landscape phones (short height)
+        ══════════════════════════════════════════ */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #hero {
+                min-height: auto;
+                padding-top: 5rem;
+                padding-bottom: 2.5rem;
+            }
+
+            .hero-inner {
+                grid-template-columns: 1fr auto;
+                text-align: left;
+                gap: 2rem;
+            }
+
+            .avatar-wrap {
+                width: 130px;
+                height: 130px;
+            }
+
+            .avatar-circle {
+                width: 90px;
+                height: 90px;
+                font-size: 1.6rem;
+            }
+
+            .card-3d-wrap {
+                margin-top: 1rem;
+            }
+
+            .mobile-menu {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+        }
+
+        /* ══════════════════════════════════════════
+           Ultrawide / large desktops ≥ 1600px
+        ══════════════════════════════════════════ */
+        @media (min-width: 1600px) {
+            section,
+            .hero-inner,
+            .edu-inner {
+                max-width: 1440px;
+            }
+
+            .hero-name {
+                font-size: clamp(4rem, 6vw, 7rem);
+            }
+
+            body {
+                font-size: 17px;
+            }
+        }
     </style>
 </head>
 
@@ -1982,8 +2091,8 @@
                     <div class="card-3d-wrap reveal fade-up reveal-delay-2">
                         <div class="card-3d">
                             <div class="card-3d-label">Current Role</div>
-                            <div class="card-3d-stat">GAS Dev</div>
-                            <div class="card-3d-desc">PeakEaze · EazyCapture</div>
+                            <div class="card-3d-stat">Automation Developer</div>
+                            <div class="card-3d-desc">Farida Gupta</div>
                             <div class="card-3d-grid">
                                 <div class="card-mini">
                                     <div class="card-mini-val">2+</div>
@@ -1994,7 +2103,7 @@
                                     <div class="card-mini-key">Rows Processed</div>
                                 </div>
                                 <div class="card-mini">
-                                    <div class="card-mini-val">2yr</div>
+                                    <div class="card-mini-val">2yr+</div>
                                     <div class="card-mini-key">Experience</div>
                                 </div>
                                 <div class="card-mini">
@@ -2015,6 +2124,10 @@
                     EazyCapture</div>
                 <div class="marquee-item"><span class="marquee-dot" style="background:var(--pink)"></span>CloudFort
                     Technologies</div>
+                <div class="marquee-item"><span class="marquee-dot" style="background:var(--pink)"></span>Farida Gupta
+                </div>
+                <div class="marquee-item"><span class="marquee-dot" style="background:var(--pink)"></span>Automation
+                    Developer</div>
                 <div class="marquee-item"><span class="marquee-dot" style="background:var(--cyan)"></span>Google
                     Workspace Marketplace</div>
                 <div class="marquee-item"><span class="marquee-dot" style="background:var(--amber)"></span>Xero ·
@@ -2072,7 +2185,7 @@
                             <div class="stat-key">Rows Processed</div>
                         </div>
                         <div class="stat-card reveal fade-up reveal-delay-2">
-                            <div class="stat-val">2yr</div>
+                            <div class="stat-val">2yr+</div>
                             <div class="stat-key">Pro Experience</div>
                         </div>
                         <div class="stat-card reveal fade-up reveal-delay-3">
@@ -2087,7 +2200,7 @@
                         <li><strong>Location</strong><span>Lucknow, India</span></li>
                         <li><strong>Email</strong><span>faiz.mohammad.dev@gmail.com</span></li>
                         <li><strong>Phone</strong><span>+91 7408751873</span></li>
-                        <li><strong>Role</strong><span>GAS Developer @ PeakEaze (EazyCapture)</span></li>
+                        <li><strong>Role</strong><span>Automation Developer @ Farida Gupta</span></li>
                         <li><strong>Prev.</strong><span>Web Developer @ CloudFort Technologies</span></li>
                         <li><strong>Edu.</strong><span>B.Tech CSE · BBDNIIT · 2020 – 2024</span></li>
                         <li><strong>Stack</strong><span>React · Node · Google Apps Script · MongoDB</span></li>
@@ -2106,76 +2219,94 @@
                 engineering, and backend architecture.</p>
             <div class="skills-grid">
                 <div class="skill-group reveal slide-left reveal-delay-1">
-                    <div class="skill-group-title">Core Development</div>
+                    <div class="skill-group-title">Frontend</div>
                     <div class="skill-item">
-                        <div class="skill-header"><span>Google Apps Script</span><span class="skill-pct">95%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill indigo" data-width="95"></div>
-                        </div>
+                        <div class="skill-header"><span>React.js / Redux Toolkit</span><span class="skill-pct">88%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill indigo" data-width="88"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-header"><span>JavaScript (ES6+)</span><span class="skill-pct">90%</span></div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill pink" data-width="90"></div>
-                        </div>
+                        <div class="skill-header"><span>JavaScript (ES6+) / TypeScript</span><span class="skill-pct">88%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill pink" data-width="88"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-header"><span>React.js / Redux Toolkit</span><span
-                                class="skill-pct">85%</span></div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill cyan" data-width="85"></div>
-                        </div>
+                        <div class="skill-header"><span>Next.js</span><span class="skill-pct">78%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill cyan" data-width="78"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-header"><span>HTML5 / CSS3 / Tailwind</span><span class="skill-pct">90%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill amber" data-width="90"></div>
-                        </div>
+                        <div class="skill-header"><span>HTML5 / CSS3 / Tailwind</span><span class="skill-pct">90%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill amber" data-width="90"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-header"><span>Workspace Automation</span><span class="skill-pct">95%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill indigo" data-width="95"></div>
-                        </div>
+                        <div class="skill-header"><span>Bootstrap</span><span class="skill-pct">82%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill indigo" data-width="82"></div></div>
                     </div>
                 </div>
+
                 <div class="skill-group reveal slide-right reveal-delay-1">
-                    <div class="skill-group-title">Backend &amp; Architecture</div>
+                    <div class="skill-group-title">Backend</div>
                     <div class="skill-item">
-                        <div class="skill-header"><span>Node.js / Express.js</span><span class="skill-pct">80%</span>
-                        </div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill pink" data-width="80"></div>
-                        </div>
+                        <div class="skill-header"><span>Node.js / Express.js</span><span class="skill-pct">80%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill pink" data-width="80"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-header"><span>MongoDB (NoSQL)</span><span class="skill-pct">75%</span></div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill cyan" data-width="75"></div>
-                        </div>
+                        <div class="skill-header"><span>MongoDB / Firestore</span><span class="skill-pct">78%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill cyan" data-width="78"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-header"><span>RESTful API Dev &amp; Integration</span><span
-                                class="skill-pct">85%</span></div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill amber" data-width="85"></div>
-                        </div>
+                        <div class="skill-header"><span>RESTful API Dev &amp; Integration</span><span class="skill-pct">85%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill amber" data-width="85"></div></div>
                     </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Auth (JWT / OAuth 2.0)</span><span class="skill-pct">80%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill indigo" data-width="80"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>PostgreSQL</span><span class="skill-pct">72%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill pink" data-width="72"></div></div>
+                    </div>
+                </div>
+
+                <div class="skill-group reveal slide-left reveal-delay-2">
+                    <div class="skill-group-title">Automation</div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Google Apps Script</span><span class="skill-pct">95%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill indigo" data-width="95"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Sheets / Drive / Gmail / Forms APIs</span><span class="skill-pct">92%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill pink" data-width="92"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Web Apps &amp; Add-ons</span><span class="skill-pct">90%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill cyan" data-width="90"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Zapier / Make.com</span><span class="skill-pct">80%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill amber" data-width="80"></div></div>
+                    </div>
+                </div>
+
+                <div class="skill-group reveal slide-right reveal-delay-2">
+                    <div class="skill-group-title">Cloud &amp; Tools</div>
                     <div class="skill-item">
                         <div class="skill-header"><span>Git / GitHub</span><span class="skill-pct">90%</span></div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill indigo" data-width="90"></div>
-                        </div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill indigo" data-width="90"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="skill-header"><span>Netlify / Vercel Deployment</span><span
-                                class="skill-pct">85%</span></div>
-                        <div class="skill-bar-bg">
-                            <div class="skill-bar-fill pink" data-width="85"></div>
-                        </div>
+                        <div class="skill-header"><span>Netlify / Vercel / Firebase / Supabase</span><span class="skill-pct">85%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill pink" data-width="85"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Docker / CI-CD Pipelines</span><span class="skill-pct">72%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill cyan" data-width="72"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Google Cloud Platform</span><span class="skill-pct">75%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill amber" data-width="75"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header"><span>Domain &amp; DNS Management</span><span class="skill-pct">78%</span></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill indigo" data-width="78"></div></div>
                     </div>
                 </div>
             </div>
@@ -2187,27 +2318,27 @@
             <h2 class="section-title reveal fade-up reveal-delay-1">Work <span>Experience</span></h2>
             <div class="section-divider reveal fade-up reveal-delay-2"></div>
             <div class="timeline">
-                <div class="timeline-item reveal slide-left reveal-delay-1">
-                    <div class="timeline-dot">01</div>
-                    <div class="timeline-company">PeakEaze (EazyCapture)</div>
-                    <div class="timeline-role">Google Apps Script Developer</div>
-                    <div class="timeline-period">Jan 2026 – Present</div>
+                <div class="timeline-item reveal slide-left reveal-delay-2">
+                    <div class="timeline-dot">03</div>
+                    <div class="timeline-company">Farida Gupta</div>
+                    <div class="timeline-role">Automation Developer</div>
+                    <div class="timeline-period">July 2026 – Present</div>
                     <ul class="timeline-list">
-                        <li>Automated core business processes for Google Sheets, Drive, Gmail, and Forms — significantly
-                            reducing manual data entry for financial teams.</li>
-                        <li>Built custom reporting engines and dashboards that handle large dataset processing and
-                            automated ledger creation.</li>
-                        <li>Optimized script execution with advanced triggers and efficient batch-processing logic to
-                            improve runtime speed and accuracy.</li>
-                        <li>Collaborated with stakeholders to translate complex financial requirements into seamless
-                            automation workflows.</li>
+                        <li>Developing process automation workflows using Google Apps Script to cut manual effort across
+                            departments.</li>
+                        <li>Building Sheets-based tools, dashboards, and workflow apps for data consolidation,
+                            validation, and reporting.</li>
+                        <li>Connecting Workspace with third-party systems (ERP, OMS, CRM, e-commerce) via REST APIs and
+                            webhooks.</li>
+                        <li>Documenting workflows, maintaining version control, and troubleshooting production systems.
+                        </li>
                     </ul>
                 </div>
                 <div class="timeline-item reveal slide-left reveal-delay-2">
                     <div class="timeline-dot">02</div>
                     <div class="timeline-company">CloudFort Technologies</div>
                     <div class="timeline-role">Web Developer</div>
-                    <div class="timeline-period">July 2024 – Dec 2025</div>
+                    <div class="timeline-period">July 2024 – June 2026</div>
                     <ul class="timeline-list">
                         <li>Architected end-to-end web applications using React.js and Tailwind CSS, focusing on
                             responsive UI and high-performance user experiences.</li>
@@ -2219,6 +2350,23 @@
                             optimization for clients.</li>
                     </ul>
                 </div>
+                <div class="timeline-item reveal slide-left reveal-delay-1">
+                    <div class="timeline-dot">01</div>
+                    <div class="timeline-company">PeakEaze (EazyCapture)</div>
+                    <div class="timeline-role">Google Apps Script Developer</div>
+                    <div class="timeline-period">Jan 2026 – April 2026</div>
+                    <ul class="timeline-list">
+                        <li>Automated core business processes for Google Sheets, Drive, Gmail, and Forms — significantly
+                            reducing manual data entry for financial teams.</li>
+                        <li>Built custom reporting engines and dashboards that handle large dataset processing and
+                            automated ledger creation.</li>
+                        <li>Optimized script execution with advanced triggers and efficient batch-processing logic to
+                            improve runtime speed and accuracy.</li>
+                        <li>Collaborated with stakeholders to translate complex financial requirements into seamless
+                            automation workflows.</li>
+                    </ul>
+                </div>
+
             </div>
         </section>
 
@@ -2231,7 +2379,7 @@
                 <div class="project-card reveal fade-up reveal-delay-1">
                     <div class="project-icon" style="background:rgba(79,70,229,0.15)">⚙️</div>
                     <div class="project-title">Audit Automation Suite</div>
-                    <div class="project-type">High-Performance Audit Engine</div>
+                    <div class="project-type">PeakEaze · High-Performance Audit Engine</div>
                     <p class="project-desc">
                         Engineered a Google Apps Script engine that automatically transforms raw Xero and QuickBooks
                         General Ledgers into fully reconciled Trial Balances. Processed 1,00,000+ rows using in-memory
@@ -2271,12 +2419,12 @@
             <div class="section-label reveal fade-up">Marketplace</div>
             <h2 class="section-title reveal fade-up reveal-delay-1">Featured <span>Add-ons</span></h2>
             <div class="section-divider reveal fade-up reveal-delay-2"></div>
-            <p class="section-subtitle reveal fade-up reveal-delay-2">Collaborator &amp; Developer on two live Google
+            <p class="section-subtitle reveal fade-up reveal-delay-2">Collaborator &amp; Developer at CloudFort Technologies on two live Google
                 Workspace Marketplace add-ons.</p>
             <div class="addons-grid">
                 <div class="addon-card reveal slide-left reveal-delay-1">
                     <div class="addon-badge">🤖 AI-Powered</div>
-                    <div class="addon-title">AI Assist for Gemini</div>
+                    <div class="addon-title">AI Assist for Gemini <span style="color:var(--text3);font-weight:500;font-size:0.8rem;">· CloudFort</span></div>
                     <ul class="addon-list">
                         <li>Contributed to a Google Workspace Marketplace AI add-on integrating Gemini Assist in Sheets,
                             Forms &amp; Docs.</li>
@@ -2293,7 +2441,7 @@
                 </div>
                 <div class="addon-card reveal slide-right reveal-delay-2">
                     <div class="addon-badge">📄 Automation</div>
-                    <div class="addon-title">Smart Form Publisher Add-on</div>
+                    <div class="addon-title">Smart Form Publisher <span style="color:var(--text3);font-weight:500;font-size:0.8rem;">· CloudFort</span></div>
                     <ul class="addon-list">
                         <li>Contributed to a live Google Workspace Marketplace Add-on using Google Apps Script.</li>
                         <li>Built and optimized Form-to-Document automation workflows.</li>
@@ -2365,11 +2513,13 @@
 
     <script>
         /* ── LOADER ── */
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('hidden');
-            }, 1800);
-        });
+        function hideLoader() {
+            const l = document.getElementById('loader');
+            if (l) l.classList.add('hidden');
+        }
+        window.addEventListener('load', () => setTimeout(hideLoader, 1800));
+        // Fallback: hide loader after 3s no matter what
+        setTimeout(hideLoader, 3000);
 
         /* ── CURSOR ── */
         const dot = document.getElementById('cursor-dot');
